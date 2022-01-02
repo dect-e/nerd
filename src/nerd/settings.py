@@ -74,6 +74,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
+    'nerd.base',
 ]
 
 MIDDLEWARE = [
@@ -183,3 +185,6 @@ EMAIL_HOST_USER = config.get('email', 'user', fallback='')
 EMAIL_HOST_PASSWORD = config.get('email', 'password', fallback='')
 EMAIL_USE_TLS = config.getboolean('email', 'tls', fallback=False)
 EMAIL_USE_SSL = config.getboolean('email', 'ssl', fallback=False)
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
