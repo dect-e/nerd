@@ -198,3 +198,8 @@ SUBJECT = "NERD Email Verification"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+BOOTSTRAP5 = {
+    'css_url' : '/static/bootstrap.min.css',
+    'javascript_url': '/static/bootstrap.bundle.min.js',
+}
