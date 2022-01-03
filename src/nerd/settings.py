@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_bootstrap5',
     'admin_auto_filters',
+    'verify_email.apps.VerifyEmailConfig',
     'nerd.base',
 ]
 
@@ -187,5 +188,13 @@ EMAIL_HOST_PASSWORD = config.get('email', 'password', fallback='')
 EMAIL_USE_TLS = config.getboolean('email', 'tls', fallback=False)
 EMAIL_USE_SSL = config.getboolean('email', 'ssl', fallback=False)
 
+DEFAULT_FROM_EMAIL = config.get('email', 'from', fallback='')
+
+VERIFICATION_SUCCESS_TEMPLATE = "registration/verification-success.html"
+VERIFICATION_FAILED_TEMPLATE = "registration/verification-failed.html"
+HTML_MESSAGE_TEMPLATE = "registration/verification-mail.html"
+SUBJECT = "NERD Email Verification"
+
+LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"

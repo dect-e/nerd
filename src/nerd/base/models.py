@@ -21,6 +21,7 @@ class ExtensionType(models.TextChoices):
 class Extension(models.Model):
     event = models.ForeignKey(Event, related_name='extensions', on_delete=models.CASCADE)
     number = models.IntegerField()
+    password = models.CharField(max_length=16)
     name = models.CharField(max_length=255)
     extension_type = models.CharField(
         max_length=255,
