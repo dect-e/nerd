@@ -2,7 +2,6 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-
 <div class="container-sm mx-auto d-flex flex-column min-vh-100 justify-content-center align-items-center" style="max-width: 330px;">
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}

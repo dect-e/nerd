@@ -69,10 +69,12 @@ class ExtensionAdmin(admin.ModelAdmin):
         'number',
         'event',
         'extension_type',
+        'public',
         'owner',
     )
     list_filter = (
         'extension_type',
+        'public',
         EventFilter,
         OwnerFilter,
     )
@@ -83,7 +85,7 @@ class ExtensionAdmin(admin.ModelAdmin):
 
     def get_formsets_with_inlines(self, request, obj=None):
         for inline in self.get_inline_instances(request, obj):
-            if not (isinstance(inline, CallgroupMemberAdminInline) and obj.extension_type != ExtensionType.CALLGROUP):
+            if not (isinstance(inline, CallgroupMemberAdminInline) and obj and obj.extension_type != ExtensionType.CALLGROUP):
                 yield inline.get_formset(request, obj), inline
 
 class CallgroupMembershipAdmin(admin.ModelAdmin):

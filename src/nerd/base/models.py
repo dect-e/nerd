@@ -32,6 +32,7 @@ class Extension(models.Model):
         get_user_model(),
         on_delete=models.CASCADE
     )
+    public = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.number} - {self.name}"
