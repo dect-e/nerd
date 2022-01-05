@@ -37,6 +37,11 @@ class Extension(models.Model):
     def __str__(self):
         return f"{self.number} - {self.name}"
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['event', 'number'], name='unique_extension')
+        ]
+
 class CallgroupMembership(models.Model):
     extension = models.ForeignKey(Extension, related_name='callgroups', on_delete=models.CASCADE)
     callgroup = models.ForeignKey(Extension, related_name='members', limit_choices_to={'extension_type': ExtensionType.CALLGROUP}, on_delete=models.CASCADE)
@@ -46,3 +51,8 @@ class CallgroupMembership(models.Model):
 
     def is_active(self):
         return not self.paused and self.accepted
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['extension', 'callgroup'], name='unique_callgroup_membership')
+        ]
