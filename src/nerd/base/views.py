@@ -25,7 +25,7 @@ class ExtensionsView(LoginRequiredMixin, ListView):
 class ExtensionEditView(LoginRequiredMixin, UpdateView):
     model = Extension
     template_name_suffix = '_edit'
-    fields = ['name']
+    fields = ['name', 'number']
     success_url = reverse_lazy('extensions')
     # TODO: validation
 

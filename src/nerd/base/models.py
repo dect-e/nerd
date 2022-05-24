@@ -17,10 +17,11 @@ class ExtensionType(models.TextChoices):
     SIP = 'sip'
     DECT = 'dect'
     CALLGROUP = 'callgroup'
+    STATIC = 'static'
 
 class Extension(models.Model):
     event = models.ForeignKey(Event, related_name='extensions', on_delete=models.CASCADE)
-    number = models.IntegerField()
+    number = models.CharField(max_length=15)
     password = models.CharField(max_length=16)
     name = models.CharField(max_length=255)
     extension_type = models.CharField(
@@ -30,7 +31,8 @@ class Extension(models.Model):
     )
     owner = models.ForeignKey(
         get_user_model(),
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        blank=True
     )
     public = models.BooleanField(default=True)
 
