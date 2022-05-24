@@ -13,6 +13,19 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
+class DectHandset(models.Model):
+    ipei = models.CharField(max_length=32)
+    name = models.CharField(max_length=255, blank=True)
+    owner = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f"{self.name} - {self.ipei}"
+
 class ExtensionType(models.TextChoices):
     SIP = 'sip'
     DECT = 'dect'
@@ -22,7 +35,6 @@ class ExtensionType(models.TextChoices):
 class Extension(models.Model):
     event = models.ForeignKey(Event, related_name='extensions', on_delete=models.CASCADE)
     number = models.CharField(max_length=15)
-    password = models.CharField(max_length=16)
     name = models.CharField(max_length=255)
     extension_type = models.CharField(
         max_length=255,
@@ -32,16 +44,25 @@ class Extension(models.Model):
     owner = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        blank=True
+        blank=True,
+        null=True
     )
     public = models.BooleanField(default=True)
+    dialout_allowed = models.BooleanField(default=True)
+    trunk = models.BooleanField(default=False)
+    outgoing_extension = models.CharField(max_length=15, blank=True)
+    static_target = models.CharField(max_length=255, blank=True)
+    dect_handset = models.ForeignKey(DectHandset, related_name='extensions', on_delete=models.CASCADE, blank=True, null=True)
+    dect_claim_token = models.CharField(max_length=15, blank=True)
+    sip_password = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
         return f"{self.number} - {self.name}"
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['event', 'number'], name='unique_extension')
+            models.UniqueConstraint(fields=['event', 'number'], name='unique_extension'),
+            models.UniqueConstraint(fields=['event', 'dect_handset'], name='unique_handset')
         ]
 
 class CallgroupMembership(models.Model):

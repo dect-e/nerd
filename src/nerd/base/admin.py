@@ -71,6 +71,8 @@ class ExtensionAdmin(admin.ModelAdmin):
         'extension_type',
         'public',
         'owner',
+        'dect_handset',
+        'outgoing_extension',
     )
     list_filter = (
         'extension_type',
@@ -96,6 +98,14 @@ class CallgroupMembershipAdmin(admin.ModelAdmin):
         'paused',
     )
 
+class DectHandsetAdmin(admin.ModelAdmin):
+    list_display = (
+        'ipei',
+        'name',
+        'owner',
+    )
+
 admin.site.register(Event, EventAdmin)
 admin.site.register(Extension, ExtensionAdmin)
 admin.site.register(CallgroupMembership, CallgroupMembershipAdmin)
+admin.site.register(DectHandset, DectHandsetAdmin)
