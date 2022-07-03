@@ -1,14 +1,15 @@
 from django.views.generic import TemplateView, ListView
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 
 from verify_email.email_handler import send_verification_email
 
 from .forms import UserCreationForm
-from .models import Extension
+from .models import *
 
 class IndexView(TemplateView):
     template_name = 'base/index.html'
@@ -59,3 +60,35 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+def export(request):
+    event = get_object_or_404(Event, pk=request.GET.get('event'))
+    extensions = {}
+    for ext in Extension.objects.filter(event=event):
+        extension = {
+            'name': ext.name,
+            'type': ext.extension_type,
+            'dialout_allowed': ext.dialout_allowed,
+            'trunk': ext.trunk
+        }
+
+        if ext.outgoing_extension != '':
+            extension['outgoing_extension'] = ext.outgoing_extension
+
+        if ext.extension_type == ExtensionType.CALLGROUP:
+            extension['callgroup_members'] = [membership.extension.number for membership in CallgroupMembership.objects.filter(callgroup=ext, paused=False, accepted=True)]
+        elif ext.extension_type == ExtensionType.DECT:
+            if ext.dect_handset is not None:
+                extension['dect_ipei'] = ext.dect_handset.ipei
+            else:
+                extension['dect_claim_token'] = ext.dect_claim_token
+        elif ext.extension_type == ExtensionType.SIP:
+            extension['sip_password'] = ext.sip_password
+        elif ext.extension_type == ExtensionType.STATIC:
+            extension['static_target'] = ext.static_target
+
+        extensions[ext.number] = extension
+
+    return JsonResponse({
+        "extensions": extensions
+    })

@@ -8,6 +8,8 @@ urlpatterns = [
     path('extensions', views.ExtensionsView.as_view(), name='extensions'),
     path('extension/<int:pk>/', views.ExtensionEditView.as_view(), name='extension_edit'),
     path('phonebook', views.PhonebookView.as_view(), name='phonebook'),
+    path('export.json', views.export, name='export'),
+
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register', views.register, name='register'),
     path('verification/', include('verify_email.urls')),

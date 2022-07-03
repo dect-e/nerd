@@ -70,6 +70,7 @@ class ExtensionAdmin(admin.ModelAdmin):
         'event',
         'extension_type',
         'public',
+        'dialout_allowed',
         'owner',
         'dect_handset',
         'outgoing_extension',
