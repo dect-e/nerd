@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [project.scripts]
-nerd = "nerd.manage:main"
+nerd = "manage:main"
 
 [project.urls]
 "Source" = "https://github.com/dect-e/nerd/"
