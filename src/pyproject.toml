@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nerd"
+version = "0.0.1"
+authors = [
+  { name="n0emis", email="git@n0emis.eu" },
+]
+description = "Nummern- und Endgeräte-Registrierung-Dienst — NERD"
+#readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+packages = [
+    { include = "nerd" },
+]
+dependencies = [
+    "Django>=4.0, <5.0",
+    "django-bootstrap5>=21.3",
+    "django-admin-autocomplete-filter>=0.7.1",
+    "Django-Verify-Email>=1.0.9, <2.0.0",
+]
+
+[project.scripts]
+nerd = "nerd.__main__:main"
+
+[project.urls]
+"Source" = "https://github.com/dect-e/nerd/"
+
