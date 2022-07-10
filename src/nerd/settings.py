@@ -66,6 +66,8 @@ DEBUG = config.getboolean('django', 'debug', fallback=False)
 ALLOWED_HOSTS = config.get('django', 'allowed_hosts', fallback='*').split(',')
 
 CSRF_TRUSTED_ORIGINS = config.get('django', 'csrf_trusted_origins', fallback='').split(',')
+if CSRF_TRUSTED_ORIGINS == ['']:
+    CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
 

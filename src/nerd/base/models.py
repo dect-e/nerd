@@ -31,6 +31,7 @@ class ExtensionType(models.TextChoices):
     DECT = 'dect'
     CALLGROUP = 'callgroup'
     STATIC = 'static'
+    TEMP = 'temp'
 
 class Extension(models.Model):
     event = models.ForeignKey(Event, related_name='extensions', on_delete=models.CASCADE)
