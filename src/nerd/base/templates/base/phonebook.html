@@ -1,9 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% for extension in extensions %}
-<p>{{ extension }}</p>
-{% endfor %}
+<h1>
+    Telefonbuch
+</h1>
+<h2>
+    +49 33921 999799-
+</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+	{% for extension in extensions %}
+        <tr>
+            <th scope="row">{{ extension.number }}</th>
+	    <td>{{ extension.name }}</td>
+        </tr>
+	{% endfor %}
+    </tbody>
+</table>
 
 {% if is_paginated %}
 <div class="pagination">
