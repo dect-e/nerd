@@ -74,6 +74,8 @@ class ExtensionAdmin(admin.ModelAdmin):
         'owner',
         'dect_handset',
         'outgoing_extension',
+        'callgroups',
+        'token_or_password',
     )
     list_filter = (
         'extension_type',
@@ -85,6 +87,16 @@ class ExtensionAdmin(admin.ModelAdmin):
         CallgroupMemberAdminInline,
         CallgroupMembershipAdminInline,
     )
+
+    def callgroups(self, obj):
+        return ', '.join([str(m.callgroup) for m in obj.callgroups.all()])
+
+    def token_or_password(self, obj):
+        if obj.extension_type == ExtensionType.DECT:
+            return obj.dect_claim_token
+        elif obj.extension_type == ExtensionType.STATIC:
+            return obj.static_target
+        return obj.sip_password
 
     def get_formsets_with_inlines(self, request, obj=None):
         for inline in self.get_inline_instances(request, obj):
